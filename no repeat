@@ -1,0 +1,32 @@
+package Java;
+
+public class norepeat{
+    public static void main(String[] args) {
+        char[] input = {'a', 'b', 'c', 'd', 'a', 'b'};
+        char result = repeat(input);
+
+        if (result != 0) {
+            System.out.println("The first non-repeated character is: " + result);
+        } else {
+            System.out.println("No non-repeated character found.");
+        }
+    }
+
+    public static char repeat(char[] input) {
+        int[] count = new int[256]; // Array to count occurrences of characters (assuming ASCII characters)
+
+        // Step 1: Count occurrences of each character
+        for (char c : input) {
+            count[c]++;
+        }
+
+        // Step 2: Find the first character with a count of 1
+        for (char c : input) {
+            if (count[c] == 1) {
+                return c;
+            }
+        }
+
+        return 0; // Return 0 if no non-repeated character is found
+    }
+}
