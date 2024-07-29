@@ -1,0 +1,65 @@
+package Java;
+
+import java.util.Scanner;
+
+public class character {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char[] input = {'a', 'b', 'c', 'd', 'a', 'b', 'a'};
+
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Count the occurrence of a given character");
+            System.out.println("2. Return the highest occurred character");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the character to count: ");
+                    char charToCount = sc.next().charAt(0);
+                    int count = countOccurrence(input, charToCount);
+                    System.out.println("The character '" + charToCount + "' occurred " + count + " times.");
+                    break;
+                case 2:
+                    char highestOccurredChar = findHighestOccurredCharacter(input);
+                    System.out.println("The highest occurred character is: " + highestOccurredChar);
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    public static int countOccurrence(char[] array, char ch) {
+        int count = 0;
+        for (char c : array) {
+            if (c == ch) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static char findHighestOccurredCharacter(char[] array) {
+        int[] count = new int[256]; // Assuming ASCII characters
+        for (char c : array) {
+            count[c]++;
+        }
+
+        int maxCount = 0;
+        char highestOccurredChar = 0;
+        for (char c : array) {
+            if (count[c] > maxCount) {
+                maxCount = count[c];
+                highestOccurredChar = c;
+            }
+        }
+        return highestOccurredChar;
+    }
+}
