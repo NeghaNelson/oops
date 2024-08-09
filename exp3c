@@ -1,0 +1,37 @@
+package Java;
+
+import java.util.*;
+
+public class exp2c {
+
+	    public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+	        System.out.print("Enter a sentence (max 80 characters): ");
+	        String sentence = scanner.nextLine();
+
+	     
+	        if (sentence.length() > 80) {
+	            System.out.println("Error: Sentence exceeds 80 characters.");
+	            return;
+	        }
+
+	        String result = removeVowels(sentence);
+	        System.out.println("Sentence without vowels: " + result);
+	    }
+
+	    public static String removeVowels(String sentence) {
+	        StringBuilder result = new StringBuilder();
+	        for (char ch : sentence.toCharArray()) {
+	            if (!isVowel(ch)) {
+	                result.append(ch);
+	            }
+	        }
+	        return result.toString();
+	    }
+
+	    public static boolean isVowel(char ch) {
+	        return "AEIOUaeiou".indexOf(ch) != -1;
+	    }
+	}
+
+
