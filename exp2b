@@ -1,6 +1,6 @@
 package Java;
 
-public class norepeat{
+public class exp2b{
     public static void main(String[] args) {
         char[] input = {'a', 'b', 'c', 'd', 'a', 'b'};
         char result = repeat(input);
