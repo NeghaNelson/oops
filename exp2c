@@ -2,7 +2,7 @@ package Java;
 
 import java.util.Scanner;
 
-public class character {
+public class exp2c{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         char[] input = {'a', 'b', 'c', 'd', 'a', 'b', 'a'};
