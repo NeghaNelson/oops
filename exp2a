@@ -1,6 +1,6 @@
 package Java;
 
-public class prime{
+public class exp2a{
     public static void main(String[] args) {
         int n = 100;
         boolean[] isPrime = new boolean[n + 1];
