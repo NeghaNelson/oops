@@ -1,0 +1,47 @@
+package Java;
+import java.util.Scanner;
+
+public class  exp2b {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+      
+        System.out.print("Enter a long paragraph of text: ");
+        String paragraph = scanner.nextLine();
+        
+       
+        System.out.print("Enter a character to replace vowels: ");
+        String replacementChar = scanner.nextLine();
+        
+        
+        if (replacementChar.length() != 1) {
+            System.out.println("Error: Please enter a single character.");
+            return;
+        }
+        
+      
+        String modifiedText = replaceVowels(paragraph, replacementChar.charAt(0));
+        
+     
+        System.out.println("\nOriginal Text:");
+        System.out.println(paragraph);
+        System.out.println("\nModified Text:");
+        System.out.println(modifiedText);
+    }
+
+    public static String replaceVowels(String text, char replacement) {
+        StringBuilder result = new StringBuilder();
+        for (char ch : text.toCharArray()) {
+            if (isVowel(ch)) {
+                result.append(replacement);
+            } else {
+                result.append(ch);
+            }
+        }
+        return result.toString();
+    }
+
+    public static boolean isVowel(char ch) {
+        return "AEIOUaeiou".indexOf(ch) != -1;
+    }
+}
