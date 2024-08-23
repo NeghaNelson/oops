@@ -1,0 +1,42 @@
+package Java;
+import java.util.Scanner;
+class exp4a {
+    private int totalCars;
+    private double totalCash; 
+    
+    public  exp4a() {
+        totalCars = 0;
+        totalCash = 0.0;
+    }
+    public void payingCar() {
+        totalCars++;
+        totalCash += 50; 
+    }
+    public void noPayCar() {
+        totalCars++;
+    }
+    public void display() {
+        System.out.println("Total Cars: " + totalCars);
+        System.out.printf("Total Cash Collected: %.2f rupees%n", totalCash);
+    }
+    public static void main(String[] args) {
+        exp4a tollbooth = new exp4a();
+        Scanner scanner = new Scanner(System.in);
+        char input;
+        System.out.println("Press 'P' for a paying car, 'N' for a non-paying car, or 'E' to exit and display totals.");
+        while (true) {
+            input = scanner.next().charAt(0); 
+            if (input == 'P' || input == 'p') {
+                tollbooth.payingCar(); 
+            } else if (input == 'N' || input == 'n') {
+                tollbooth.noPayCar(); 
+            } else if (input == 'E' || input == 'e') {
+                tollbooth.display();
+                break;
+            } else {
+                System.out.println("Invalid input! Please press 'P', 'N', or 'E'.");
+            }
+        }
+        scanner.close(); 
+    }
+}
