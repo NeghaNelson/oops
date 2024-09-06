@@ -1,0 +1,97 @@
+package Java;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Subject {
+    private String subjectName;
+    private String subjectCode;
+    private int mark;
+    private String grade;
+
+    public Subject(String subjectName, String subjectCode, int mark) {
+        this.subjectName = subjectName;
+        this.subjectCode = subjectCode;
+        this.mark = mark;
+        this.grade = calculateGrade(mark);
+    }
+
+    private String calculateGrade(int mark) {
+        if (mark >= 90) return "A";
+        else if (mark >= 80) return "B";
+        else if (mark >= 70) return "C";
+        else if (mark >= 60) return "D";
+        else return "F";
+    }
+
+    @Override
+    public String toString() {
+        return "Subject: " + subjectName + ", Code: " + subjectCode + ", Mark: " + mark + ", Grade: " + grade;
+    }
+}
+
+class Student {
+    private String name;
+    private String registerNo;
+    private String department;
+    private String specialization;
+    private int semester;
+    private ArrayList<Subject> subjects;
+
+    public Student(String name, String registerNo, String department, String specialization, int semester) {
+        this.name = name;
+        this.registerNo = registerNo;
+        this.department = department;
+        this.specialization = specialization;
+        this.semester = semester;
+        this.subjects = new ArrayList<>();
+    }
+
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+    }
+
+    public void editSubject(int index, Subject subject) {
+        if (index >= 0 && index < subjects.size()) {
+            subjects.set(index, subject);
+        }
+    }
+
+    public void deleteSubject(int index) {
+        if (index >= 0 && index < subjects.size()) {
+            subjects.remove(index);
+        }
+    }
+
+    public void displayDetails() {
+        System.out.println("Name: " + name);
+        System.out.println("Register No: " + registerNo);
+        System.out.println("Department: " + department);
+        System.out.println("Specialization: " + specialization);
+        System.out.println("Semester: " + semester);
+        System.out.println("Subjects:");
+        for (Subject subject : subjects) {
+            System.out.println(subject);
+        }
+    }
+
+    public String getRegisterNo() {
+        return registerNo;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+}
+
