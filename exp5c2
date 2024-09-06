@@ -1,0 +1,95 @@
+package Java;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+//Main class to run the application
+public class SchoolDepartmentManager {
+ private static ArrayList<exp5c> departments = new ArrayList<>();
+ private static Scanner scanner = new Scanner(System.in);
+
+ public static void main(String[] args) {
+     int choice;
+     do {
+         System.out.println("\nSchool Department Manager Menu:");
+         System.out.println("1. Get Department Details");
+         System.out.println("2. Display Department List");
+         System.out.println("3. Display Department-wise Details");
+         System.out.println("4. Exit");
+         System.out.print("Enter your choice: ");
+         choice = scanner.nextInt();
+         scanner.nextLine(); // Consume newline
+
+         switch (choice) {
+             case 1:
+                 getDepartmentDetails();
+                 break;
+             case 2:
+                 displayDepartmentList();
+                 break;
+             case 3:
+                 displayDepartmentWiseDetails();
+                 break;
+             case 4:
+                 System.out.println("Exiting...");
+                 break;
+             default:
+                 System.out.println("Invalid choice. Please try again.");
+         }
+     } while (choice != 4);
+ }
+
+ private static void getDepartmentDetails() {
+     System.out.print("Enter department name: ");
+     String deptName = scanner.nextLine();
+     System.out.print("Enter HOD name: ");
+     String hodName = scanner.nextLine();
+     System.out.print("Enter number of faculty: ");
+     int noOfFaculty = scanner.nextInt();
+     System.out.print("Enter number of students: ");
+     int noOfStudents = scanner.nextInt();
+     System.out.print("Enter number of programs: ");
+     int noOfPrograms = scanner.nextInt();
+     scanner.nextLine(); // Consume newline
+
+     if (deptName.equalsIgnoreCase("CSE")) {
+         departments.add(new CSE(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms));
+     } else if (deptName.equalsIgnoreCase("AI&DS")) {
+         departments.add(new AIANDS(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms));
+     } else if (deptName.equalsIgnoreCase("CE")) {
+         departments.add(new CE(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms));
+     } else {
+         System.out.println("Invalid department name. Please try again.");
+     }
+ }
+
+ private static void displayDepartmentList() {
+     if (departments.isEmpty()) {
+         System.out.println("No departments found.");
+     } else {
+         System.out.println("\nDepartment List:");
+         for (exp5c department : departments) {
+             department.displayDepartmentDetails();
+             System.out.println();
+         }
+     }
+ }
+
+ private static void displayDepartmentWiseDetails() {
+     System.out.print("Enter department name: ");
+     String deptName = scanner.nextLine();
+     boolean found = false;
+
+     for (exp5c department : departments) {
+         if (department.deptName.equalsIgnoreCase(deptName)) {
+             department.displayDepartmentDetails();
+             found = true;
+             break;
+         }
+     }
+
+     if (!found) {
+         System.out.println("Department not found.");
+     }
+ }
+}
