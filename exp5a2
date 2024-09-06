@@ -1,0 +1,53 @@
+package Java;
+
+import java.util.Scanner;
+
+public class ShapeAreaCalulator{
+	 private static Scanner scanner = new Scanner(System.in);
+
+	 public static void main(String[] args) {
+	     int choice;
+	     do {
+	         System.out.println("\nShape Area Calculator Menu:");
+	         System.out.println("1. Calculate Area of Triangle");
+	         System.out.println("2. Calculate Area of Rectangle");
+	         System.out.println("3. Exit");
+	         System.out.print("Enter your choice: ");
+	         choice = scanner.nextInt();
+
+	         switch (choice) {
+	             case 1:
+	                 calculateTriangleArea();
+	                 break;
+	             case 2:
+	                 calculateRectangleArea();
+	                 break;
+	             case 3:
+	                 System.out.println("Exiting...");
+	                 break;
+	             default:
+	                 System.out.println("Invalid choice. Please try again.");
+	         }
+	     } while (choice != 3);
+	 }
+
+	 private static void calculateTriangleArea() {
+	     Triangle triangle = new Triangle();
+	     System.out.print("Enter base of the triangle: ");
+	     double base = scanner.nextDouble();
+	     System.out.print("Enter height of the triangle: ");
+	     double height = scanner.nextDouble();
+	     triangle.setDimensions(base, height);
+	     triangle.display_area();
+	 }
+
+	 private static void calculateRectangleArea() {
+	     Rectangle rectangle = new Rectangle();
+	     System.out.print("Enter width of the rectangle: ");
+	     double width = scanner.nextDouble();
+	     System.out.print("Enter height of the rectangle: ");
+	     double height = scanner.nextDouble();
+	     rectangle.setDimensions(width, height);
+	     rectangle.display_area();
+	 }
+	}
