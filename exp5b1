@@ -1,0 +1,104 @@
+package Java;
+
+import java.util.Scanner;
+
+//Super class
+class exp5b {
+ protected String fuel_name;
+ protected String state;
+ protected double cost;
+
+ public void calculateCost(double liters) {
+     double total_cost = liters * cost;
+     System.out.printf("Total cost for %.2f liters: ₹%.2f\n", liters, total_cost);
+ }
+}
+
+
+class Petrol extends exp5b {
+ public Petrol(String state) {
+     fuel_name = "Petrol";
+     this.state = state;
+     switch (state) {
+         case "Tamil Nadu":
+             cost = 97.46;
+             break;
+         case "Kerala":
+             cost = 98.35;
+             break;
+         case "Karnataka":
+             cost = 99.61;
+             break;
+         default:
+             cost = 0;
+             break;
+     }
+ }
+}
+
+//Derived class for Diesel
+class Diesel extends exp5b {
+ public Diesel(String state) {
+     fuel_name = "Diesel";
+     this.state = state;
+     switch (state) {
+         case "Tamil Nadu":
+             cost = 96.08;
+             break;
+         case "Kerala":
+             cost = 97.37;
+             break;
+         case "Karnataka":
+             cost = 98.61;
+             break;
+         default:
+             cost = 0;
+             break;
+     }
+ }
+}
+
+//Derived class for Kerosene
+class Kerosene extends exp5b {
+ public Kerosene(String state) {
+     fuel_name = "Kerosene";
+     this.state = state;
+     switch (state) {
+         case "Tamil Nadu":
+             cost = 25.7;
+             break;
+         case "Kerala":
+             cost = 26.4;
+             break;
+         case "Karnataka":
+             cost = 27.6;
+             break;
+         default:
+             cost = 0;
+             break;
+     }
+ }
+}
+
+//Derived class for Auto LPG Gas
+class AutoLPGGas extends exp5b {
+ public AutoLPGGas(String state) {
+     fuel_name = "Auto LPG Gas";
+     this.state = state;
+     switch (state) {
+         case "Tamil Nadu":
+             cost = 70.33;
+             break;
+         case "Kerala":
+             cost = 71.27;
+             break;
+         case "Karnataka":
+             cost = 72.08;
+             break;
+         default:
+             cost = 0;
+             break;
+     }
+ }
+}
+
