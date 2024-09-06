@@ -1,0 +1,95 @@
+package Java;
+
+import java.util.Scanner;
+
+//Main class to run the application
+public class FuelCostCalculator {
+private static Scanner scanner = new Scanner(System.in);
+
+public static void main(String[] args) {
+   int choice;
+   do {
+       System.out.println("\nFuel Cost Calculator Menu:");
+       System.out.println("1. Calculate Cost for Petrol");
+       System.out.println("2. Calculate Cost for Diesel");
+       System.out.println("3. Calculate Cost for Kerosene");
+       System.out.println("4. Calculate Cost for Auto LPG Gas");
+       System.out.println("5. Exit");
+       System.out.print("Enter your choice: ");
+       choice = scanner.nextInt();
+       scanner.nextLine(); // Consume newline
+
+       switch (choice) {
+           case 1:
+               calculatePetrolCost();
+               break;
+           case 2:
+               calculateDieselCost();
+               break;
+           case 3:
+               calculateKeroseneCost();
+               break;
+           case 4:
+               calculateAutoLPGGasCost();
+               break;
+           case 5:
+               System.out.println("Exiting...");
+               break;
+           default:
+               System.out.println("Invalid choice. Please try again.");
+       }
+   } while (choice != 5);
+}
+
+private static void calculatePetrolCost() {
+   System.out.print("Enter your name: ");
+   String name = scanner.nextLine();
+   System.out.print("Enter the state: ");
+   String state = scanner.nextLine();
+   System.out.print("Enter the number of liters: ");
+   double liters = scanner.nextDouble();
+
+   Petrol petrol = new Petrol(state);
+   System.out.printf("%s, you are in %s.\n", name, state);
+   petrol.calculateCost(liters);
+}
+
+private static void calculateDieselCost() {
+   System.out.print("Enter your name: ");
+   String name = scanner.nextLine();
+   System.out.print("Enter the state: ");
+   String state = scanner.nextLine();
+   System.out.print("Enter the number of liters: ");
+   double liters = scanner.nextDouble();
+
+   Diesel diesel = new Diesel(state);
+   System.out.printf("%s, you are in %s.\n", name, state);
+   diesel.calculateCost(liters);
+}
+
+private static void calculateKeroseneCost() {
+   System.out.print("Enter your name: ");
+   String name = scanner.nextLine();
+   System.out.print("Enter the state: ");
+   String state = scanner.nextLine();
+   System.out.print("Enter the number of liters: ");
+   double liters = scanner.nextDouble();
+
+   Kerosene kerosene = new Kerosene(state);
+   System.out.printf("%s, you are in %s.\n", name, state);
+   kerosene.calculateCost(liters);
+}
+
+private static void calculateAutoLPGGasCost() {
+   System.out.print("Enter your name: ");
+   String name = scanner.nextLine();
+   System.out.print("Enter the state: ");
+   String state = scanner.nextLine();
+   System.out.print("Enter the number of liters: ");
+   double liters = scanner.nextDouble();
+
+   AutoLPGGas autoLPGGas = new AutoLPGGas(state);
+   System.out.printf("%s, you are in %s.\n", name, state);
+   autoLPGGas.calculateCost(liters);
+}
+}
