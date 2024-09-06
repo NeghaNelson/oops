@@ -1,0 +1,69 @@
+package Java;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Super class
+class exp5c {
+    protected String deptName;
+    protected String hodName;
+    protected int noOfFaculty;
+    protected int noOfStudents;
+    protected int noOfPrograms;
+
+    public exp5c(String deptName, String hodName, int noOfFaculty, int noOfStudents, int noOfPrograms) {
+        this.deptName = deptName;
+        this.hodName = hodName;
+        this.noOfFaculty = noOfFaculty;
+        this.noOfStudents = noOfStudents;
+        this.noOfPrograms = noOfPrograms;
+    }
+
+    public void displayDepartmentDetails() {
+        System.out.println("Department Name: " + deptName);
+        System.out.println("HOD Name: " + hodName);
+        System.out.println("Number of Faculty: " + noOfFaculty);
+        System.out.println("Number of Students: " + noOfStudents);
+        System.out.println("Number of Programs: " + noOfPrograms);
+    }
+}
+
+// Derived class for CSE department
+class CSE extends exp5c {
+    public CSE(String deptName, String hodName, int noOfFaculty, int noOfStudents, int noOfPrograms) {
+        super(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms);
+    }
+
+    @Override
+    public void displayDepartmentDetails() {
+        super.displayDepartmentDetails();
+        System.out.println("Department: Computer Science and Engineering");
+    }
+}
+
+// Derived class for AI&DS department
+class AIANDS extends exp5c{
+    public AIANDS(String deptName, String hodName, int noOfFaculty, int noOfStudents, int noOfPrograms) {
+        super(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms);
+    }
+
+    @Override
+    public void displayDepartmentDetails() {
+        super.displayDepartmentDetails();
+        System.out.println("Department: Artificial Intelligence and Data Science");
+    }
+}
+
+// Derived class for CE department
+class CE extends exp5c{
+    public CE(String deptName, String hodName, int noOfFaculty, int noOfStudents, int noOfPrograms) {
+        super(deptName, hodName, noOfFaculty, noOfStudents, noOfPrograms);
+    }
+
+    @Override
+    public void displayDepartmentDetails() {
+        super.displayDepartmentDetails();
+        System.out.println("Department: Civil Engineering");
+    }
+}
+
