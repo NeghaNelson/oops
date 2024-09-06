@@ -1,0 +1,126 @@
+package Java;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeSheet {
+    private static ArrayList<Student> students = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+        do {
+            System.out.println("\nStudent Grade Sheet Menu:");
+            System.out.println("1. Add Student");
+            System.out.println("2. Edit Student");
+            System.out.println("3. Delete Student");
+            System.out.println("4. Display Student Details");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    editStudent();
+                    break;
+                case 3:
+                    deleteStudent();
+                    break;
+                case 4:
+                    displayStudents();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 5);
+    }
+
+    private static void addStudent() {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter register number: ");
+        String registerNo = scanner.nextLine();
+        System.out.print("Enter department: ");
+        String department = scanner.nextLine();
+        System.out.print("Enter specialization: ");
+        String specialization = scanner.nextLine();
+        System.out.print("Enter semester: ");
+        int semester = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        Student student = new Student(name, registerNo, department, specialization, semester);
+        for (int i = 0; i < 5; i++) {
+            System.out.print("Enter subject name: ");
+            String subjectName = scanner.nextLine();
+            System.out.print("Enter subject code: ");
+            String subjectCode = scanner.nextLine();
+            System.out.print("Enter mark: ");
+            int mark = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            Subject subject = new Subject(subjectName, subjectCode, mark);
+            student.addSubject(subject);
+        }
+        students.add(student);
+        System.out.println("Student added successfully!");
+    }
+
+    private static void editStudent() {
+        System.out.print("Enter register number of student to edit: ");
+        String registerNo = scanner.nextLine();
+        Student student = findStudent(registerNo);
+        if (student != null) {
+            System.out.print("Enter new name: ");
+            student.setName(scanner.nextLine());
+            System.out.print("Enter new department: ");
+            student.setDepartment(scanner.nextLine());
+            System.out.print("Enter new specialization: ");
+            student.setSpecialization(scanner.nextLine());
+            System.out.print("Enter new semester: ");
+            student.setSemester(scanner.nextInt());
+            scanner.nextLine(); // Consume newline
+            System.out.println("Student details updated successfully!");
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    private static void deleteStudent() {
+        System.out.print("Enter register number of student to delete: ");
+        String registerNo = scanner.nextLine();
+        Student student = findStudent(registerNo);
+        if (student != null) {
+            students.remove(student);
+            System.out.println("Student deleted successfully!");
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    private static void displayStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+        } else {
+            for (Student student : students) {
+                student.displayDetails();
+                System.out.println();
+            }
+        }
+    }
+
+    private static Student findStudent(String registerNo) {
+        for (Student student : students) {
+            if (student.getRegisterNo().equals(registerNo)) {
+                return student;
+            }
+        }
+        return null;
+    }
+}
