@@ -1,0 +1,60 @@
+package Java;
+
+class exp5a {
+ protected double dimension1; 
+ protected double dimension2; 
+ // Setters
+ public void setDimensions(double dimension1, double dimension2) {
+     this.dimension1 = dimension1;
+     this.dimension2 = dimension2;
+ }
+
+ // Getters
+ public double getDimension1() {
+     return dimension1;
+ }
+
+ public double getDimension2() {
+     return dimension2;
+ }
+
+
+ public void find_area() {
+     System.out.println("Area calculation not defined for generic shape.");
+ }
+
+ // Method to display area (to be overridden)
+ public void display_area() {
+     System.out.println("Displaying area for generic shape.");
+ }
+}
+
+//Derived class for Triangle
+class Triangle extends exp5a {
+ @Override
+ public void find_area() {
+     // Area of Triangle = 0.5 * base * height
+     double area = 0.5 * dimension1 * dimension2;
+     System.out.printf("Area of Triangle: %.2f\n", area);
+ }
+
+ @Override
+ public void display_area() {
+     find_area();
+ }
+}
+
+//Derived class for Rectangle
+class Rectangle extends exp5a {
+ @Override
+ public void find_area() {
+     // Area of Rectangle = width * height
+     double area = dimension1 * dimension2;
+     System.out.printf("Area of Rectangle: %.2f\n", area);
+ }
+
+ @Override
+ public void display_area() {
+     find_area();
+ }
+}
