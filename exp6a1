@@ -1,0 +1,46 @@
+package Java;
+abstract class Shape {
+    protected String color;
+    protected int sides;
+
+    public Shape(String color, int sides) {
+        this.color = color;
+        this.sides = sides;
+    }
+
+    public void display() {
+        System.out.println("Color: " + color);
+        System.out.println("Number of sides: " + sides);
+    }
+
+    public abstract double calcArea();
+}
+class Square extends Shape {
+    private double side;
+
+    public Square(String color, double side) {
+        super(color, 4);
+        this.side = side;
+    }
+
+    @Override
+    public double calcArea() {
+        return side * side;
+    }
+}
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(String color, double length, double width) {
+        super(color, 4);
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double calcArea() {
+        return length * width;
+    }
+}
+
