@@ -1,0 +1,17 @@
+package Java;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a Square object
+        Square square = new Square("Red", 5.0);
+        square.display();
+        System.out.println("Area of Square: " + square.calcArea());
+        System.out.println();
+
+        // Create a Rectangle object
+        Rectangle rectangle = new Rectangle("Blue", 4.0, 6.0);
+        rectangle.display();
+        System.out.println("Area of Rectangle: " + rectangle.calcArea());
+        System.out.println("URK23CS1001 NEGHA NELSON A");
+    }
+}
