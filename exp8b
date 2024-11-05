@@ -1,0 +1,60 @@
+class Airport {
+    private boolean runwayAvailable = true;
+
+    // Synchronized method to request runway access
+    public synchronized boolean requestRunway(String planeId) {
+        if (runwayAvailable) {
+            System.out.println("Runway is available for " + planeId);
+            runwayAvailable = false; // Reserve the runway
+            return true;
+        } else {
+            System.out.println("Runway is occupied. " + planeId + " is waiting.");
+            return false;
+        }
+    }
+
+    // Synchronized method to release runway
+    public synchronized void releaseRunway(String planeId) {
+        System.out.println(planeId + " has released the runway.");
+        runwayAvailable = true;
+        notifyAll(); // Notify other planes waiting for the runway
+    }
+}
+
+class Airplane implements Runnable {
+    private final Airport airport;
+    private final String planeId;
+
+    public Airplane(Airport airport, String planeId) {
+        this.airport = airport;
+        this.planeId = planeId;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (!airport.requestRunway(planeId)) {
+                Thread.sleep(1000); // Wait and retry if the runway is unavailable
+            }
+            System.out.println(planeId + " is taking off/landing...");
+            Thread.sleep(2000); // Simulate time taken to take off or land
+            airport.releaseRunway(planeId);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class AirportSimulation {
+    public static void main(String[] args) {
+        Airport airport = new Airport();
+        System.out.println("URK23CS1001 NEGHA NELSON A");
+        Thread plane1 = new Thread(new Airplane(airport, "Plane 1"));
+        Thread plane2 = new Thread(new Airplane(airport, "Plane 2"));
+        Thread plane3 = new Thread(new Airplane(airport, "Plane 3"));
+
+        plane1.start();
+        plane2.start();
+        plane3.start();
+    }
+}
