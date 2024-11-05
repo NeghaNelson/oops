@@ -1,0 +1,169 @@
+import java.util.Scanner;
+
+// Custom exception classes
+class BalanceException extends Exception {
+    public BalanceException(String message) {
+        super(message);
+    }
+}
+
+class WithdrawException extends Exception {
+    public WithdrawException(String message) {
+        super(message);
+    }
+}
+
+class PinException extends Exception {
+    public PinException(String message) {
+        super(message);
+    }
+}
+
+// Interface for bank operations
+interface BankOperations {
+    void createAccount(double initialBalance) throws BalanceException;
+    void deposit(double amount);
+    void withdraw(double amount) throws WithdrawException;
+    double checkBalance();
+}
+
+// Bank account class implementing BankOperations
+class BankAccount implements BankOperations {
+    private double balance;
+    private int pin;
+    private int pinAttempts;
+
+    // Constructor
+    public BankAccount(int pin) {
+        this.pin = pin;
+        this.pinAttempts = 0;
+    }
+
+    // Create an account with an initial balance
+    @Override
+    public void createAccount(double initialBalance) throws BalanceException {
+        if (initialBalance < 500) {
+            throw new BalanceException("Initial balance must be at least 500.");
+        }
+        this.balance = initialBalance;
+        System.out.println("Account created successfully with balance: " + initialBalance);
+    }
+
+    // Deposit money
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount);
+    }
+
+    // Withdraw money
+    @Override
+    public void withdraw(double amount) throws WithdrawException {
+        if (amount > balance) {
+            throw new WithdrawException("Insufficient balance.");
+        }
+        balance -= amount;
+        System.out.println("Withdrew: " + amount);
+    }
+
+    // Check the balance
+    @Override
+    public double checkBalance() {
+        return balance;
+    }
+
+    // Validate the entered PIN
+    public boolean validatePin(int inputPin) throws PinException {
+        if (inputPin == this.pin) {
+            pinAttempts = 0; // Reset attempts on correct PIN
+            return true;
+        } else {
+            pinAttempts++;
+            if (pinAttempts >= 3) {
+                throw new PinException("PIN entry limit exceeded. Account locked.");
+            }
+            System.out.println("Invalid PIN. Try again.");
+            return false;
+        }
+    }
+}
+
+// Main class with menu
+public class ATMBankingSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BankAccount account = null;
+        int pin;
+
+        System.out.print("Set your account PIN: ");
+        pin = scanner.nextInt();
+        account = new BankAccount(pin);
+
+        boolean accountCreated = false;
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\nURK23CS1001 NEGHA NELSON A");
+            System.out.println("\nATM Menu:");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Check Balance");
+            System.out.println("5. Exit");
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+
+            try {
+                switch (choice) {
+                    case 1:
+                        if (accountCreated) {
+                            System.out.println("Account already created.");
+                        } else {
+                            System.out.print("Enter initial balance: ");
+                            double initialBalance = scanner.nextDouble();
+                            account.createAccount(initialBalance);
+                            accountCreated = true;
+                        }
+                        break;
+
+                    case 2:
+                        System.out.print("Enter deposit amount: ");
+                        double depositAmount = scanner.nextDouble();
+                        account.deposit(depositAmount);
+                        break;
+
+                    case 3:
+                        System.out.print("Enter PIN: ");
+                        int withdrawPin = scanner.nextInt();
+                        if (account.validatePin(withdrawPin)) {
+                            System.out.print("Enter withdrawal amount: ");
+                            double withdrawAmount = scanner.nextDouble();
+                            account.withdraw(withdrawAmount);
+                        }
+                        break;
+
+                    case 4:
+                        System.out.print("Enter PIN: ");
+                        int balancePin = scanner.nextInt();
+                        if (account.validatePin(balancePin)) {
+                            System.out.println("Current Balance: " + account.checkBalance());
+                        }
+                        break;
+
+                    case 5:
+                        exit = true;
+                        System.out.println("Exiting...");
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                }
+            } catch (BalanceException | WithdrawException | PinException e) {
+                System.out.println("Exception: " + e.getMessage());
+            }
+        }
+
+        scanner.close();
+    }
+}
