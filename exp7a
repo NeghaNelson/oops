@@ -1,0 +1,58 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// User-defined checked exception
+class InvalidVowelException extends Exception {
+    public InvalidVowelException(String message) {
+        super(message);
+    }
+}
+
+public class VowelArray {
+    public static void main(String[] args) {
+        System.out.println("URK23CS1001 NEGHA NELSON A");
+        Scanner scanner = new Scanner(System.in);
+        List<Character> vowels = new ArrayList<>();
+        System.out.println("Enter characters (type 'exit' to finish):");
+
+        while (true) {
+            String input = scanner.nextLine();
+            // Check for exit condition
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            // Process each character
+            try {
+                if (input.length() != 1) {
+                    System.out.println("Please enter a single character.");
+                    continue;
+                }
+                char character = input.charAt(0);
+                // Check if the character is a vowel
+                if (isVowel(character)) {
+                    vowels.add(character);
+                } else {
+                    throw new InvalidVowelException("character is consonant");
+                }
+            } catch (InvalidVowelException e) {
+                System.out.println("InvalidVowelException: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            } finally {
+                // This block can be used for cleanup if needed
+                System.out.println("Current vowels: " + vowels);
+            }
+        }
+
+        // Display the final list of vowels
+        System.out.println("Final array of vowels: " + vowels);
+        scanner.close();
+    }
+
+    // Method to check if a character is a vowel
+    private static boolean isVowel(char c) {
+        return "AEIOUaeiou".indexOf(c) != -1;
+    }
+}
