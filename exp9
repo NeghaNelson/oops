@@ -1,0 +1,64 @@
+package text;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class TextFileAnalyzer {
+
+    public static void main(String[] args) {
+        String filePath = "./src/text/Sample.txt"; // Specify the path to your text file
+        try {
+            analyzeTextFile(filePath);
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        }
+    }
+
+    public static void analyzeTextFile(String filePath) throws IOException {
+        int whiteSpaceCount = 0;
+        int wordCount = 0;
+        int punctuationCount = 0;
+        boolean inWord = false; // To track whether we are inside a word
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Process each line read from the file
+                for (char c : line.toCharArray()) {
+                    // Count white spaces
+                    if (Character.isWhitespace(c)) {
+                        whiteSpaceCount++;
+                        inWord = false; // We are no longer in a word
+                    } else {
+                        // Count punctuation marks
+                        if (isPunctuation(c)) {
+                            punctuationCount++;
+                        }
+                        
+                        // Count words
+                        if (!inWord) {
+                            wordCount++; // Start of a new word
+                            inWord = true; // We are now in a word
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("Number of embedded white spaces: " + whiteSpaceCount);
+        System.out.println("Number of words: " + wordCount);
+        System.out.println("Number of punctuation marks: " + punctuationCount);
+    }
+
+    private static boolean isPunctuation(char c) {
+        // Check if the character is a punctuation mark
+        return (c == '!' || c == '"' || c == '#' || c == '$' || c == '%'
+                || c == '&' || c == '\'' || c == '(' || c == ')' || c == '*'
+                || c == '+' || c == ',' || c == '-' || c == '.' || c == '/'
+                || c == ':' || c == ';' || c == '<' || c == '=' || c == '>'
+                || c == '?' || c == '@' || c == '[' || c == '\\' || c == ']'
+                || c == '^' || c == '_' || c == '`' || c == '{' || c == '|'
+                || c == '}' || c == '~');
+    }
+}
