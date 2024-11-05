@@ -1,0 +1,175 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+class BubbleSortThread extends Thread {
+    private int[] array;
+
+    public BubbleSortThread(int[] array) {
+        this.array = array;
+    }
+
+    @Override
+    public void run() {
+        bubbleSort(array);
+    }
+
+    private void bubbleSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    // Swap array[j] and array[j + 1]
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public int[] getSortedArray() {
+        return array;
+    }
+}
+
+class MergeThread extends Thread {
+    private int[][] sortedSubArrays;
+    private int[] result;
+
+    public MergeThread(int[][] sortedSubArrays, int totalLength) {
+        this.sortedSubArrays = sortedSubArrays;
+        this.result = new int[totalLength];
+    }
+
+    @Override
+    public void run() {
+        mergeSortedArrays();
+    }
+
+    private void mergeSortedArrays() {
+        int n = sortedSubArrays.length;
+        int[] indexes = new int[n];
+
+        for (int i = 0; i < result.length; i++) {
+            int minIndex = -1;
+            int minValue = Integer.MAX_VALUE;
+
+            for (int j = 0; j < n; j++) {
+                if (indexes[j] < sortedSubArrays[j].length && sortedSubArrays[j][indexes[j]] < minValue) {
+                    minIndex = j;
+                    minValue = sortedSubArrays[j][indexes[j]];
+                }
+            }
+
+            result[i] = minValue;
+            if (minIndex != -1) {
+                indexes[minIndex]++;
+            }
+        }
+    }
+
+    public int[] getMergedArray() {
+        return result;
+    }
+}
+
+public class ParallelBubbleSort {
+    private static Scanner scanner = new Scanner(System.in);
+    private static int[] currentArray; // To hold the current array for sorting
+
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("URK23CS1001 NEGHA NELSON A");
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Enter Array");
+            System.out.println("2. Set Number of Threads");
+            System.out.println("3. Sort and Merge Array");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter the number of elements:");
+                    int size = scanner.nextInt();
+                    currentArray = new int[size];
+                    System.out.println("Enter the elements:");
+                    for (int i = 0; i < size; i++) {
+                        currentArray[i] = scanner.nextInt();
+                    }
+                    break;
+                case 2:
+                    if (currentArray == null) {
+                        System.out.println("Please enter an array first (Option 1).");
+                    } else {
+                        System.out.println("Set number of threads (subarrays) for sorting:");
+                        int numThreads = scanner.nextInt();
+                        if (numThreads <= 0 || numThreads > currentArray.length) {
+                            System.out.println("Invalid number of threads. Please enter a value between 1 and " + currentArray.length + ".");
+                        } else {
+                            int[] sortedArray = handleSorting(currentArray, numThreads);
+                            System.out.println("Sorted Array: " + Arrays.toString(sortedArray));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (currentArray == null) {
+                        System.out.println("Please enter an array first (Option 1).");
+                    } else {
+                        int defaultNumThreads = 4; // Default to 4 threads
+                        System.out.println("Sorting and merging the array using " + defaultNumThreads + " threads...");
+                        int[] sortedArray = handleSorting(currentArray, defaultNumThreads);
+                        System.out.println("Sorted Array: " + Arrays.toString(sortedArray));
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting program.");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static int[] handleSorting(int[] array, int numThreads) throws InterruptedException {
+        int[][] subArrays = splitArray(array, numThreads);
+        BubbleSortThread[] sortThreads = new BubbleSortThread[numThreads];
+
+        // Create and start a thread for each subarray to sort it
+        for (int i = 0; i < numThreads; i++) {
+            sortThreads[i] = new BubbleSortThread(subArrays[i]);
+            sortThreads[i].start();
+        }
+
+        // Wait for each sorting thread to complete
+        for (int i = 0; i < numThreads; i++) {
+            sortThreads[i].join();
+        }
+
+        // Collect sorted subarrays from threads
+        for (int i = 0; i < numThreads; i++) {
+            subArrays[i] = sortThreads[i].getSortedArray();
+        }
+
+        // Create and start the merging thread
+        MergeThread mergeThread = new MergeThread(subArrays, array.length);
+        mergeThread.start();
+        mergeThread.join();
+
+        // Return the sorted array
+        return mergeThread.getMergedArray();
+    }
+
+    private static int[][] splitArray(int[] array, int n) {
+        int length = array.length;
+        int[][] subArrays = new int[n][];
+        int subArraySize = (int) Math.ceil((double) length / n);
+
+        for (int i = 0; i < n; i++) {
+            int start = i * subArraySize;
+            int end = Math.min(start + subArraySize, length);
+            subArrays[i] = Arrays.copyOfRange(array, start, end);
+        }
+        return subArrays;
+    }
+}
