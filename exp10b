@@ -1,0 +1,39 @@
+package texts;
+
+import javax.swing.*;
+import java.awt.event.*;
+public class ButtonApp {
+public static void main(String[] args) {
+JFrame frame = new JFrame("Button Example"); frame.setSize(300,
+300); frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setLayout(null);
+JLabel messageLabel = new JLabel("");
+messageLabel.setBounds(50, 200, 200, 25);
+frame.add(messageLabel);
+JButton yesButton = new JButton("YES");
+yesButton.setBounds(50, 30, 200, 30);
+frame.add(yesButton);
+JButton noButton = new JButton("No");
+noButton.setBounds(50, 70, 200, 30);
+frame.add(noButton);
+JButton closeButton = new JButton("CLOSE");
+closeButton.setBounds(50, 110, 200, 30);
+frame.add(closeButton);
+yesButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+messageLabel.setText("Button Yes is pressed");
+}
+});
+noButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+messageLabel.setText("Button No is pressed");
+}
+});
+closeButton.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+frame.dispose();
+}
+});
+frame.setVisible(true);
+}
+}
