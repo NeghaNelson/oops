@@ -1,0 +1,63 @@
+package text;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class tenexp {
+ JFrame f = new JFrame();
+ private JTextField usernameField;
+ private JPasswordField
+passwordField;
+ private JButton loginButton;
+ public tenexp() {
+ f.setTitle("Login");
+ f.setSize(300, 150);
+
+f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ f.setLocationRelativeTo(null);
+ JPanel panel = new JPanel(new
+GridLayout(3, 2, 10, 10));
+ panel.add(new
+JLabel("Username:"));
+ usernameField = new
+JTextField();
+ panel.add(usernameField);
+ panel.add(new
+JLabel("Password:"));
+ passwordField = new
+JPasswordField();
+ panel.add(passwordField);
+ loginButton = new
+JButton("Login");
+
+loginButton.addActionListener(new
+ActionListener() {
+ @Override
+ public void
+actionPerformed(ActionEvent e) {
+ String username =
+usernameField.getText();
+ String password = new
+String(passwordField.getPassword());
+ if
+(username.equals("Karunya") &&
+password.equals("Karunya")) {
+
+JOptionPane.showMessageDialog(f,
+"Login Successful");
+ } else {
+
+JOptionPane.showMessageDialog(f,
+"Login Failed");
+ }
+ }
+ });
+ panel.add(loginButton);
+ f.add(panel);
+ f.setVisible(true);
+ }
+ public static void main(String[] args)
+{
+ new tenexp();
+ }
+}
